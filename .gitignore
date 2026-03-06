@@ -20,6 +20,9 @@
 # production
 /build
 
+# ai / ide (portfolio: keep repo focused on product)
+.claude/
+
 # misc
 .DS_Store
 *.pem
