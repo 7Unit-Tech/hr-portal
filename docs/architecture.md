@@ -90,6 +90,9 @@ Any existing admin can promote employees from **Admin → Employees**:
 
 ## Supabase Setup
 - Auth: Email magic link (no passwords)
+- **Site URL**: Must match `NEXT_PUBLIC_APP_URL` (e.g. `https://hr.7unit.in`)
+- **Redirect URLs**: Add `https://your-domain.com/auth/callback`
+- **Mask magic link URL**: In Auth → Email Templates → Magic Link, replace the default link with your domain so users see `https://your-domain.com/auth/callback?token_hash=...` instead of the raw Supabase URL. Use: `<a href="{{ .SiteURL }}/auth/callback?token_hash={{ .TokenHash }}&type=magiclink">Confirm your email</a>`
 - Database: PostgreSQL with RLS
 - Storage: Not needed (PDFs generated client-side)
 - Edge Functions: Not needed (v1)
@@ -99,7 +102,7 @@ Any existing admin can promote employees from **Admin → Employees**:
 NEXT_PUBLIC_SUPABASE_URL          ← Public (safe to expose)
 NEXT_PUBLIC_SUPABASE_ANON_KEY     ← Public (safe to expose, RLS protects data)
 SUPABASE_SERVICE_ROLE_KEY         ← Secret (server-side only, never in client)
-NEXT_PUBLIC_APP_URL               ← Portal base URL for emails (e.g. https://hr.7unit.in)
+NEXT_PUBLIC_APP_URL               ← Required for auth redirects. Magic links use this. Set in Vercel to your production URL.
 RESEND_API_KEY                    ← Resend API key (welcome email when adding employee)
 RESEND_FROM_EMAIL                 ← From address for Resend (default: onboarding@resend.dev)
 ```
